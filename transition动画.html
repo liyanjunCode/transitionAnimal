@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,user-scalable=no" />
+	<script type="text/javascript" src="m.Tween2.js"></script>
+	<title>Document</title>
+	<style>
+		body {
+			margin: 0;
+		}
+		body,
+		html {
+			height: 100%;
+			position: relative;
+		}
+		#box {
+			height: 100%;
+			position: relative;
+			-webkit-perspective: 300px;
+			perspective: 300px;
+		}
+		#logo2,
+		#logo3{
+			position: absolute;
+			top: 40%;
+			left: 30%;
+			width: 40%;
+			-webkit-transform-style: preserve-3d;
+			transform-style: preserve-3d;
+			/*display: none;*/
+		}
+		#box img {
+			display: block;
+			width: 100%;
+			-webkit-animation: 2s infinite linear rotate;
+			animation: 2s infinite linear rotate;
+		}
+		@-webkit-keyframes rotate {
+			from {
+				transform:rotateY(0);
+			}
+			to {
+				transform:rotateY(360deg);
+			}
+		}
+		@keyframes rotate {
+			from {
+				transform:rotateY(0);
+			}
+			to{
+				transform:rotateY(360deg);
+			}
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<div id="logo2">
+			<img src="img/logo2.png" alt="">
+		</div>
+		<div id="logo3">
+			<img src="img/logo3.png" alt="">
+		</div>
+	</div>
+	<script>
+		var logo2 = document.querySelector("#logo2");
+		var logo3 = document.querySelector("#logo3");
+		fn1();
+		function fn1(){
+			logo3.style.display = "none";
+			logo2.style.display = "block";
+			css(logo2,"translateZ",-1000);
+			css(logo3,"translateZ",-1000);
+			MTween({
+				el:logo2,
+				target:{
+					translateZ:0
+				},
+				time:1200,
+				type:"easeOut",
+				callBack:fn2
+			})
+		}
+		function fn2(){
+			setTimeout(function(){
+				MTween({
+					el:logo2,
+					target:{
+						translateZ:-1000
+					},
+					time:1200,
+					type:"easeOut",
+					callBack:fn3
+				})
+			},2000)
+			
+		}
+		function fn3(){
+			logo2.style.display = "none";
+			logo3.style.display = "block";
+			MTween({
+				el:logo3,
+				target:{
+					translateZ:0
+				},
+				time:1200,
+				type:"easeOut",
+				callBack:fn4
+			})
+			
+		}
+		function fn4(){
+			setTimeout(function(){
+				MTween({
+					el:logo3,
+					target:{
+						translateZ:-1000
+					},
+					time:1200,
+					type:"easeOut",
+					callBack:fn1
+				})
+			},2000)
+			
+		}
+	</script>
+</body>
+</html>
